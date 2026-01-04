@@ -1,0 +1,23 @@
+{
+  "enabledPlugins": {
+    "context7@claude-plugins-official": true
+  },
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "your-api-token-here",
+    "ANTHROPIC_BASE_URL": ""
+  },
+  "model": "sonnet",
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/your/home/dir/.claude/notify.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

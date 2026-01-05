@@ -10,7 +10,7 @@ MESSAGE="任务执行完成"
 
 # 飞书机器人 Webhook URL（在飞书群里添加自定义机器人获取）
 # 格式: https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxxxx
-FEISHU_WEBHOOK="https://open.feishu.cn/open-apis/bot/v2/hook/d62b3061-7e15-46e9-a5b0-01f2cb4ef799"
+FEISHU_WEBHOOK=""
 
 # ============== 本地通知 ==============
 send_local_notification() {

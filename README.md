@@ -1,6 +1,9 @@
 # Claude Code Hooks - 任务完成自动通知
 
+**Automatic Notification System for Claude Code Task Completion**
+
 让 Claude Code 在完成任务后自动发送通知提醒你，支持本地桌面通知和飞书推送。
+
 
 ## 功能特点
 
@@ -245,16 +248,99 @@ A: 检查：
 | **SubagentStop** | 子代理完成时 | 监控子任务状态 |
 | **PreCompact** | 压缩上下文前 | 保存重要信息 |
 
+---
+
+## 🔗 相关工具
+
+如果你对 Claude Code 开发感兴趣，推荐查看以下项目：
+
+### WeChat Article Skills - 微信公众号文章工具集
+一套完整的微信公众号内容创作工具，包括：
+- **AI 写作助手** - 智能生成高质量技术文章
+- **文章格式化** - Markdown 转微信排版
+- **草稿发布** - 自动发布到微信后台
+
+[📦 查看项目](https://github.com/BND-1/wechat_article_skills)
+
+> 💡 本通知工具与微信工具集配合使用，可实现文章发布后的自动通知提醒！
+
+---
+
 ## 参考资料
 
 - [Claude Code Hooks 官方文档](https://code.claude.com/docs/en/hooks)
 - [飞书自定义机器人文档](https://open.feishu.cn/document/ukTMukTMukTM/uUTNz4SN1MjL1UzM)
 - [Claude Code 完全上手指南](https://www.kdjingpai.com/en/claude-code-wanquanba/)
 
-## License
+---
 
-MIT License
+## 📝 示例文章
 
-## 贡献
+使用本工具和其他 Claude Code 技巧创作的精选文章：
 
-欢迎提交 Issue 和 Pull Request！
+### 技术文章示例
+
+1. **[Claude Code 零基础指南：不会写代码也能做开发？看这一篇就够了，效率翻倍！](https://mp.weixin.qq.com/s/Dx-XYcj74c2LdZOWwNS7GQ)**  
+
+2. **[从70分钟到9分钟：微信公众号自动化Skills！提效狂魔！](https://mp.weixin.qq.com/s/iBKgEX_vfYNIe90qPi03Sw)**  
+
+3. **[从 Chat 到 Agent：Claude Agent SDK 才是 AI 真正的生产力开关](https://mp.weixin.qq.com/s/58nZuLJGNjm6hqfGzJg-ZA)**  
+
+4. **[Claude Skill：为什么它会取代 Dify、n8n 和 Coze？](https://mp.weixin.qq.com/s/rXl4nLI6ouJMIMfvL1iSbQ)**  
+
+> 💡 **提示**：以上文章均使用 Claude Code 和相关工具完成创作，欢迎参考学习！
+
+---
+
+## 📱 关注公众号
+
+扫描下方二维码关注我的微信公众号，获取更多 Claude Code 和 AI 开发技巧：
+
+![公众号二维码](./qrcodes/公众号.png)
+> 👆 **关注公众号** - 第一时间获取最新文章和工具更新
+
+---
+
+## 🤝 关于作者
+
+### 联系方式
+
+#### 添加个人微信
+扫描下方二维码添加作者微信，交流使用心得：
+
+![个人微信二维码](./qrcodes/personal_wechat.png)
+> 👆 **添加微信** - 疑问解答、技术交流，拉你入群
+
+---
+
+#### 加入技术交流群
+扫描下方二维码加入微信群，与更多开发者交流：
+
+![群聊二维码](./qrcodes/group_wechat.png)
+> 👆 **加入群聊** - 技术讨论、问题解答、交流讨论
+
+---
+
+#### 赞赏支持
+如果这个项目对你有帮助，欢迎赞赏支持：
+
+![赞赏二维码](./qrcodes/appreciation.png)
+> 👆 **赞赏支持** - 您的支持是我最大的动力
+
+---
+
+## 📄 许可证
+
+MIT License - 供个人和商业使用
+
+---
+
+## 🙏 致谢
+
+感谢 Claude Code 团队提供的强大 Hooks 功能！
+
+---
+
+**祝你使用愉快！** 🎉
+
+如有问题或建议，欢迎通过上方二维码联系我！

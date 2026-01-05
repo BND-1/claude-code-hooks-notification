@@ -59,7 +59,7 @@ FEISHU_WEBHOOK="https://open.feishu.cn/open-apis/bot/v2/hook/your-webhook-url"
         "hooks": [
           {
             "type": "command",
-            "command": "/your/home/dir/.claude/notify.sh"
+            "command": "/your/home/dir/.claude/notify.sh" // Windows版本填写："powershell.exe -ExecutionPolicy Bypass -File \"C:\\Users\\admin\\.claude\\notify.ps1\""（配置完需要删掉注释）
           }
         ]
       }

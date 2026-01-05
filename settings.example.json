@@ -14,7 +14,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/your/home/dir/.claude/notify.sh"
+            "command": "/your/home/dir/.claude/notify.sh" ## Windows版本填写："powershell.exe -ExecutionPolicy Bypass -File \"C:\\Users\\admin\\.claude\\notify.ps1\""
           }
         ]
       }

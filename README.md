@@ -1,12 +1,14 @@
-# Claude Code Hooks - 任务完成自动通知
+# Claude Code Hooks - 任务完成 & 提问等待自动通知
 
-**Automatic Notification System for Claude Code Task Completion**
+**Automatic Notification System for Claude Code Task Completion & AskUserQuestion**
 
-让 Claude Code 在完成任务后自动发送通知提醒你，支持本地桌面通知和飞书推送。
+让 Claude Code 在完成任务后、或向你提问需要回答时，自动发送通知提醒你，支持本地桌面通知和飞书推送。
 
 
 ## 功能特点
 
+- ✅ **任务完成通知**：Claude Code 停止响应时（Stop hook）推送提醒
+- ✅ **提问等待通知**：Claude Code 调用 `AskUserQuestion` 向你提问时（PreToolUse hook）推送提醒，避免对话挂起没人理
 - ✅ **本地通知**：Linux/macOS/Windows 桌面弹窗提醒
 - ✅ **飞书推送**：远程服务器工作时的移动端通知
 - ✅ **开箱即用**：Hooks 是 Claude Code 内置功能，无需安装插件
@@ -26,11 +28,17 @@
 
 ```bash
 # 复制脚本到 Claude Code 配置目录
-cp notify.sh ~/.claude/notify.sh
+cp notify.sh ~/.claude/notify.sh             # 任务完成通知
+cp notify-ask.sh ~/.claude/notify-ask.sh     # 提问等待通知（可选，依赖 jq）
 
 # 添加执行权限
-chmod +x ~/.claude/notify.sh
+chmod +x ~/.claude/notify.sh ~/.claude/notify-ask.sh
 ```
+
+> 💡 `notify-ask.sh` 用 `jq` 解析 Claude Code 传入的问题文本。建议安装：
+> - Ubuntu/Debian: `sudo apt-get install jq`
+> - macOS: `brew install jq`
+> - 未安装 jq 也能工作，但飞书卡片不会显示具体问题内容
 
 ### 2. 配置飞书机器人（可选）
 
@@ -63,15 +71,29 @@ FEISHU_WEBHOOK="https://open.feishu.cn/open-apis/bot/v2/hook/your-webhook-url"
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/your/home/dir/.claude/notify-ask.sh" // Windows版本填写："powershell.exe -ExecutionPolicy Bypass -File \"C:\\Users\\admin\\.claude\\notify-ask.ps1\""（配置完需要删掉注释）
+          }
+        ]
+      }
     ]
   }
 }
 ```
 
 **配置说明：**
-- `"Stop"` — 在 Claude 完成响应时触发
+- `"Stop"` — 在 Claude 完成响应时触发，对应 `notify.sh`（任务完成通知）
+- `"PreToolUse" + matcher "AskUserQuestion"` — 在 Claude 调用提问工具时触发，对应 `notify-ask.sh`（提问等待通知）
 - `"matcher": ""` — 空字符串表示所有情况都触发
 - `"command"` — 脚本的**绝对路径**（使用 `~/.claude/notify.sh` 的绝对路径）
+
+> 💡 两个 hook 可以单独启用，按需配置。只要任务完成提醒就只配 `Stop`，只要等待提问提醒就只配 `PreToolUse`。
 
 **获取绝对路径：**
 ```bash
@@ -113,11 +135,33 @@ brew install terminal-notifier
 
 ### 飞书
 
-发送富文本卡片消息，包含：
+发送富文本卡片消息：
+
+**任务完成通知（绿色卡片）**：
 - 通知标题
 - 执行状态
 - 当前工作目录
 - 完成时间
+
+**提问等待通知（橙色卡片）**：
+- 「❓ Claude Code 等待你的回答」标题
+- 具体问题文本（从 hook 输入中解析）
+- 选项数和问题数
+- 当前工作目录
+- 触发时间
+
+## 为什么需要「提问等待通知」？
+
+Claude Code 在长任务中可能会通过 `AskUserQuestion` 工具向用户提问，比如：
+- 「要不要清理这些临时文件？」
+- 「这两种实现方案你选哪种？」
+
+如果此时你已经离开终端去做别的事，Claude Code 会**一直挂起等待回答**，但你完全不知道。Stop hook 在这种情况下**不会触发**（因为对话还没结束）。
+
+`notify-ask.sh` / `notify-ask.ps1` 解决的就是这个问题：
+- 在 Claude 调用 `AskUserQuestion` 工具之前（PreToolUse），先推一条飞书橙色卡片
+- 卡片包含具体问题文本，你看一眼就知道该不该立刻回去回答
+- 异步发送，不会阻塞 Claude Code 的执行
 
 ## 自定义配置
 

@@ -33,9 +33,9 @@ send_local_notification() {
     if command -v notify-send &> /dev/null; then
         notify-send "$TITLE" "$MESSAGE" --icon=dialog-question --urgency=critical 2>/dev/null
     elif command -v terminal-notifier &> /dev/null; then
-        terminal-notifier -title "$TITLE" -message "$MESSAGE"
+        terminal-notifier -title "$TITLE" -message "$MESSAGE" -sound default
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        osascript -e "display notification \"$MESSAGE\" with title \"$TITLE\""
+        osascript -e "display notification \"$MESSAGE\" with title \"$TITLE\" sound name \"Glass\""
     elif command -v powershell.exe &> /dev/null; then
         powershell.exe -Command "New-BurntToastNotification -Text '$TITLE', '$MESSAGE'" 2>/dev/null
     fi

@@ -19,9 +19,9 @@ send_local_notification() {
         notify-send "$TITLE" "$MESSAGE" --icon=dialog-information 2>/dev/null
     # macOS 系统使用 terminal-notifier 或 osascript
     elif command -v terminal-notifier &> /dev/null; then
-        terminal-notifier -title "$TITLE" -message "$MESSAGE"
+        terminal-notifier -title "$TITLE" -message "$MESSAGE" -sound default
     elif [[ "$OSTYPE" == "darwin"* ]]; then
-        osascript -e "display notification \"$MESSAGE\" with title \"$TITLE\""
+        osascript -e "display notification \"$MESSAGE\" with title \"$TITLE\" sound name \"Glass\""
     # Windows (Git Bash/WSL) 使用 PowerShell
     elif command -v powershell.exe &> /dev/null; then
         powershell.exe -Command "New-BurntToastNotification -Text '$TITLE', '$MESSAGE'" 2>/dev/null

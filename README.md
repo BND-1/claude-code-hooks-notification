@@ -13,6 +13,7 @@
 - ✅ **飞书推送**：远程服务器工作时的移动端通知
 - ✅ **开箱即用**：Hooks 是 Claude Code 内置功能，无需安装插件
 - ✅ **简单配置**：仅需修改配置文件即可启用
+- ✅ **Codex CLI 支持**：同时适配 OpenAI Codex CLI，任务完成自动推送（见下方 [Codex CLI 支持](#codex-cli-支持)）
 
 ## 效果展示
 
@@ -162,6 +163,55 @@ Claude Code 在长任务中可能会通过 `AskUserQuestion` 工具向用户提�
 - 在 Claude 调用 `AskUserQuestion` 工具之前（PreToolUse），先推一条飞书橙色卡片
 - 卡片包含具体问题文本，你看一眼就知道该不该立刻回去回答
 - 异步发送，不会阻塞 Claude Code 的执行
+
+## Codex CLI 支持
+
+除了 Claude Code，本仓库也提供了 OpenAI [Codex CLI](https://github.com/openai/codex) 的通知脚本 `notify-codex.sh`。Codex 完成一轮响应时（`agent-turn-complete`）会自动推送飞书绿色卡片，包含 Codex 最后一段回复摘要。
+
+### Claude Code 与 Codex 的区别
+
+两者触发机制不同，配置方式也不同：
+
+| | Claude Code | Codex CLI |
+|---|---|---|
+| 传递方式 | stdin（JSON） | 命令行参数 `$1`（JSON） |
+| 触发配置 | `hooks`（settings.json） | `notify`（config.toml） |
+| 事件字段 | `transcript_path` | `type` + `last-assistant-message` |
+
+### Codex 配置步骤
+
+**1. 安装脚本**
+
+```bash
+cp notify-codex.sh ~/.codex/notify-codex.sh
+chmod +x ~/.codex/notify-codex.sh
+```
+
+**2. 填入飞书 Webhook**
+
+编辑 `~/.codex/notify-codex.sh`：
+
+```bash
+FEISHU_WEBHOOK="https://open.feishu.cn/open-apis/bot/v2/hook/your-webhook-url"
+```
+
+**3. 配置 Codex**
+
+编辑 `~/.codex/config.toml`，添加 `notify` 配置（顶层字段）：
+
+```toml
+notify = ["/Users/你的用户名/.codex/notify-codex.sh"]
+```
+
+> ⚠️ `notify` 数组里填脚本的**绝对路径**。
+
+**4. 测试**
+
+```bash
+~/.codex/notify-codex.sh '{"type":"agent-turn-complete","last-assistant-message":"测试 Codex 通知"}'
+```
+
+收到飞书绿色卡片 + 本地通知即配置成功。下次运行 codex 任务，完成时会自动推送。
 
 ## 自定义配置
 
